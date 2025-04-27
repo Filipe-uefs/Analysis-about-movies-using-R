@@ -29,6 +29,36 @@ movies_dataset_filtred <-
 
 #Tabelas individuais
 
+# Histograma com curva de densidade para budget
+ggplot(movies_dataset_filtred, aes(x = budget, y = after_stat(density))) +
+  geom_histogram() +
+  geom_density(color = "green", linewidth = 1)
+
+# Histograma com curva de densidade para revenue
+ggplot(movies_dataset_filtred, aes(x = revenue, y = after_stat(density))) +
+  geom_histogram() +
+  geom_density(color = "red", linewidth = 1)
+
+# Boxplot de budget
+ggplot(movies_dataset_filtred, aes(y = budget)) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  labs(
+    title = "Boxplot de Budget",
+    y = "Budget"
+  ) +
+  theme_minimal()
+
+# Boxplot de revenue
+ggplot(movies_dataset_filtred, aes(y = revenue)) +
+  geom_boxplot(fill = "lightpink", color = "black") +
+  labs(
+    title = "Boxplot de Revenue",
+    y = "Revenue"
+  ) +
+  theme_minimal()
+
+
+
 #Tabela com os dados usando da língua usada nos filmes
 table(movies_dataset_filtred$original_language)
 
@@ -40,6 +70,42 @@ table(movies_dataset_filtred$production_company)
 
 #Tabela com os dados usando dos paises que produziram os filmes
 table(movies_dataset_filtred$production_country)
+
+
+
+
+
+# medidas de resumo
+summary(movies_dataset_filtred$budget)
+summary(movies_dataset_filtred$revenue)
+
+
+# Variância budget
+variancia_budget <- var(movies_dataset_filtred$budget)
+print(paste("Variância: ", variancia_budget))
+
+# Desvio Padrão budget
+desvio_padrao_budget <- sd(movies_dataset_filtred$budget)
+print(paste("Desvio Padrão: ", desvio_padrao_budget))
+
+# Coeficiente de Variação budget
+coeficiente_variacao_budget <- desvio_padrao_budget / mean(movies_dataset_filtred$budget) * 100
+print(paste("Coeficiente de Variação: ", coeficiente_variacao_budget, "%"))
+
+
+# Variância revenue
+variancia_revenue <- var(movies_dataset_filtred$revenue, na.rm = TRUE)
+print(paste("Variância: ", variancia_revenue))
+
+# Desvio Padrão revenue
+desvio_padrao_revenue <- sd(movies_dataset_filtred$revenue, na.rm = TRUE)
+print(paste("Desvio Padrão: ", desvio_padrao_revenue))
+
+# Coeficiente de Variação 
+coeficiente_variacao_revenue <- desvio_padrao_revenue / mean(movies_dataset_filtred$revenue, na.rm = TRUE) * 100
+print(paste("Coeficiente de Variação: ", coeficiente_variacao_revenue, "%"))
+
+
 
 
 #Tabelas agrupando duas variáveis 
@@ -127,4 +193,17 @@ ggplot(movies_dataset_filtred, aes(x = budget, y = vote_average)) +
   geom_smooth(method = "lm", color = "red", se = FALSE) +
   labs(title = "Relação entre Orçamento e Média de Votos", x = "Orçamento", y = "Média de Votos") +
   scale_x_continuous(labels = scales::label_number(big.mark = ",", decimal.mark = "."))
+
+# Gráfico com linha de tendência entre budget e revenue
+ggplot(movies_dataset_filtred, aes(x = budget, y = revenue)) +
+  geom_point(alpha = 0.6, color = "darkorange") +
+  geom_smooth(method = "lm", se = TRUE, color = "black") +
+  labs(
+    title = "Budget vs Revenue com Regressão Linear",
+    x = "Budget",
+    y = "Revenue"
+  ) +
+  theme_light()
+
+
 
