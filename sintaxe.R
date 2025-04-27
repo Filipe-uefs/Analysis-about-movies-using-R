@@ -92,3 +92,39 @@ media_por_genero <- movies_dataset_filtred |>
   ) |>
   arrange(desc(media_vote))
 
+# Gráfico Gênero vs Receita
+media_receita_genero <- movies_dataset_filtred |>
+  group_by(genre) |>
+  summarise(media_receita = mean(revenue)) |>
+  arrange(desc(media_receita))
+
+ggplot(media_receita_genero, aes(x = reorder(genre, -media_receita), y = media_receita)) +
+  geom_col(color = "blue", fill = "pink") +
+  labs(title = "Média de Receita por Gênero", x = "Gênero", y = "Receita Média") +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",", decimal.mark = "."))
+
+# Gráfico Média de Votos vs Receita
+ggplot(movies_dataset_filtred, aes(x = vote_average, y = revenue)) +
+  geom_point(color = "blue", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  labs(title = "Relação entre Média de Votos e Receita", x = "Média de Votos", y = "Receita") +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",", decimal.mark = "."))
+
+# Gráfico Gênero vs Média de Votos
+media_votos_genero <- movies_dataset_filtred |>
+  group_by(genre) |>
+  summarise(media_votos = mean(vote_average)) |>
+  arrange(desc(media_votos))
+
+ggplot(media_votos_genero, aes(x = reorder(genre, -media_votos), y = media_votos)) +
+  geom_col(color = "blue", fill = "pink") +
+  labs(title = "Média de Votos por Gênero", x = "Gênero", y = "Média de Votos") +
+  scale_y_continuous(labels = scales::label_number(big.mark = ",", decimal.mark = "."))
+
+# Gráfico Orçamento vs Média de Votos
+ggplot(movies_dataset_filtred, aes(x = budget, y = vote_average)) +
+  geom_point(color = "blue", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  labs(title = "Relação entre Orçamento e Média de Votos", x = "Orçamento", y = "Média de Votos") +
+  scale_x_continuous(labels = scales::label_number(big.mark = ",", decimal.mark = "."))
+
