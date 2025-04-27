@@ -51,7 +51,7 @@ table(movies_dataset_filtred$production_country, movies_dataset_filtred$original
 france_movies = movies_dataset_filtred[movies_dataset_filtred$production_country == "France", ]
 table(france_movies$production_country, france_movies$genre)
 
-#Tabela com os dados gêneros dos filmes produzidos pela França
+#Tabela com os dados gêneros dos filmes produzidos pela Paramount Pictures
 paroumunt_movies = movies_dataset_filtred[movies_dataset_filtred$production_company == "Paramount Pictures", ]
 table(paroumunt_movies$production_company, paroumunt_movies$genre)
 
