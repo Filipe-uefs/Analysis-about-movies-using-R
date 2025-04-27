@@ -29,36 +29,6 @@ movies_dataset_filtred <-
 
 #Tabelas individuais
 
-# Histograma com curva de densidade para budget
-ggplot(movies_dataset_filtred, aes(x = budget, y = after_stat(density))) +
-  geom_histogram() +
-  geom_density(color = "green", linewidth = 1)
-
-# Histograma com curva de densidade para revenue
-ggplot(movies_dataset_filtred, aes(x = revenue, y = after_stat(density))) +
-  geom_histogram() +
-  geom_density(color = "red", linewidth = 1)
-
-# Boxplot de budget
-ggplot(movies_dataset_filtred, aes(y = budget)) +
-  geom_boxplot(fill = "lightblue", color = "black") +
-  labs(
-    title = "Boxplot de Budget",
-    y = "Budget"
-  ) +
-  theme_minimal()
-
-# Boxplot de revenue
-ggplot(movies_dataset_filtred, aes(y = revenue)) +
-  geom_boxplot(fill = "lightpink", color = "black") +
-  labs(
-    title = "Boxplot de Revenue",
-    y = "Revenue"
-  ) +
-  theme_minimal()
-
-
-
 #Tabela com os dados usando da língua usada nos filmes
 table(movies_dataset_filtred$original_language)
 
@@ -71,14 +41,23 @@ table(movies_dataset_filtred$production_company)
 #Tabela com os dados usando dos paises que produziram os filmes
 table(movies_dataset_filtred$production_country)
 
+#Tabelas agrupando duas variáveis 
 
+#Tabela com os dados relacionando países que produziram os filmes e a língua do do filme
+table(movies_dataset_filtred$production_country, movies_dataset_filtred$original_language)
 
+#Tabela com os dados gêneros dos filmes produzidos pela França
+france_movies = movies_dataset_filtred[movies_dataset_filtred$production_country == "France", ]
+table(france_movies$production_country, france_movies$genre)
+
+#Tabela com os dados gêneros dos filmes produzidos pela Paramount Pictures
+paroumunt_movies = movies_dataset_filtred[movies_dataset_filtred$production_company == "Paramount Pictures", ]
+table(paroumunt_movies$production_company, paroumunt_movies$genre)
 
 
 # medidas de resumo
 summary(movies_dataset_filtred$budget)
 summary(movies_dataset_filtred$revenue)
-
 
 # Variância budget
 variancia_budget <- var(movies_dataset_filtred$budget)
@@ -104,23 +83,6 @@ print(paste("Desvio Padrão: ", desvio_padrao_revenue))
 # Coeficiente de Variação 
 coeficiente_variacao_revenue <- desvio_padrao_revenue / mean(movies_dataset_filtred$revenue, na.rm = TRUE) * 100
 print(paste("Coeficiente de Variação: ", coeficiente_variacao_revenue, "%"))
-
-
-
-
-#Tabelas agrupando duas variáveis 
-
-#Tabela com os dados relacionando países que produziram os filmes e a língua do do filme
-table(movies_dataset_filtred$production_country, movies_dataset_filtred$original_language)
-
-#Tabela com os dados gêneros dos filmes produzidos pela França
-france_movies = movies_dataset_filtred[movies_dataset_filtred$production_country == "France", ]
-table(france_movies$production_country, france_movies$genre)
-
-#Tabela com os dados gêneros dos filmes produzidos pela Paramount Pictures
-paroumunt_movies = movies_dataset_filtred[movies_dataset_filtred$production_company == "Paramount Pictures", ]
-table(paroumunt_movies$production_company, paroumunt_movies$genre)
-
 
 # Cria gráfico comparando classificando filmes pela língua do filme
 ggplot(
@@ -205,5 +167,32 @@ ggplot(movies_dataset_filtred, aes(x = budget, y = revenue)) +
   ) +
   theme_light()
 
+# Histograma com curva de densidade para budget
+ggplot(movies_dataset_filtred, aes(x = budget, y = after_stat(density))) +
+  geom_histogram() +
+  geom_density(color = "green", linewidth = 1)
+
+# Histograma com curva de densidade para revenue
+ggplot(movies_dataset_filtred, aes(x = revenue, y = after_stat(density))) +
+  geom_histogram() +
+  geom_density(color = "red", linewidth = 1)
+
+# Boxplot de budget
+ggplot(movies_dataset_filtred, aes(y = budget)) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  labs(
+    title = "Boxplot de Budget",
+    y = "Budget"
+  ) +
+  theme_minimal()
+
+# Boxplot de revenue
+ggplot(movies_dataset_filtred, aes(y = revenue)) +
+  geom_boxplot(fill = "lightpink", color = "black") +
+  labs(
+    title = "Boxplot de Revenue",
+    y = "Revenue"
+  ) +
+  theme_minimal()
 
 
