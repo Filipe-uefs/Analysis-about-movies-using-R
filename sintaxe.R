@@ -29,15 +29,21 @@ movies_dataset_filtred <-
 
 #Tabelas individuais
 
-# Histograma com curva de densidade para budget
-ggplot(movies_dataset_filtred, aes(x = budget, y = after_stat(density))) +
-  geom_histogram() +
-  geom_density(color = "green", linewidth = 1)
+# Histograma para budget
+ggplot(movies_dataset_filtred, aes(x = budget)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 30) +  # Cor das barras e borda
+  scale_x_continuous(labels = label_comma()) +  # Formata os números no eixo X
+  scale_y_continuous(labels = label_comma()) +  # Formata os números no eixo Y
+  theme_minimal() +
+  labs(title = "Histograma de Budget")
 
-# Histograma com curva de densidade para revenue
-ggplot(movies_dataset_filtred, aes(x = revenue, y = after_stat(density))) +
-  geom_histogram() +
-  geom_density(color = "red", linewidth = 1)
+# Histograma para revenue
+ggplot(movies_dataset_filtred, aes(x = revenue)) +
+  geom_histogram(fill = "lightgreen", color = "black", bins = 30) +  # Cor das barras e borda
+  scale_x_continuous(labels = label_comma()) +  # Formata os números no eixo X
+  scale_y_continuous(labels = label_comma()) +  # Formata os números no eixo Y
+  theme_minimal() +
+  labs(title = "Histograma de Revenue")
 
 # Boxplot de budget
 ggplot(movies_dataset_filtred, aes(y = budget)) +
