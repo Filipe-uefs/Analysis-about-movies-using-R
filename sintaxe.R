@@ -8,6 +8,9 @@ library(jsonlite)
 #Carrega dataset
 movies_dataset = read.csv("tmdb_5000_movies.csv")
 
+set.seed(15112000) # data de nascimento como parametro para criar amostra
+movies_dataset = movies_dataset[sample(nrow(movies_dataset), 350), ]
+
 #Filtrando informações irrelevantes no dataset e tratando dados
 columns_to_ignore = c("homepage", "id", "keywords", "overview", "spoken_languages", "status", "tagline", "original_title")
 movies_dataset_filtred <- movies_dataset[, !(names(movies_dataset) %in% columns_to_ignore)]
@@ -20,7 +23,6 @@ movies_dataset_filtred <- movies_dataset_filtred |>
     production_country = as.character(sapply(lapply(production_countries, fromJSON), function(x) x$name[1])),
   )
 
-
 movies_dataset_filtred <-
   movies_dataset_filtred[, !(names(movies_dataset_filtred) %in% c("genres", "production_companies", "production_countries"))]
 
@@ -28,10 +30,16 @@ movies_dataset_filtred <-
 table(movies_dataset_filtred$original_language)
 
 #Tabela com os dados usando do Genêro usada nos filmes
-table(unlist(movies_dataset_filtred$genre))
+table(movies_dataset_filtred$genre)
+
+#Tabela com os dados usando do Empresas que produziram os filmes
+table(movies_dataset_filtred$production_company)
+
+#Tabela com os dados usando dos paises que produziram os filmes
+table(movies_dataset_filtred$production_country)
 
 #Tabela com os dados relacionando línguas com genêro dos filmes
-table(movies_dataset_filtred$genre, movies_dataset_filtred$original_language)
+table(movies_dataset_filtred$genre, movies_dataset_filtred$production_company)
 
 
 # Cria gráfico comparando classificando filmes pela língua do filme
