@@ -44,11 +44,16 @@ table(movies_dataset_filtred$production_country)
 
 #Tabelas agrupando duas variáveis 
 
-#Tabela com os dados relacionando línguas com genêro dos filmes
-table(movies_dataset_filtred$genre, movies_dataset_filtred$production_company)
-
-#Tabela com os dados relacionando países que produziram os filmes e produtoras
+#Tabela com os dados relacionando países que produziram os filmes e a língua do do filme
 table(movies_dataset_filtred$production_country, movies_dataset_filtred$original_language)
+
+#Tabela com os dados gêneros dos filmes produzidos pela França
+france_movies = movies_dataset_filtred[movies_dataset_filtred$production_country == "France", ]
+table(france_movies$production_country, france_movies$genre)
+
+#Tabela com os dados gêneros dos filmes produzidos pela França
+paroumunt_movies = movies_dataset_filtred[movies_dataset_filtred$production_company == "Paramount Pictures", ]
+table(paroumunt_movies$production_company, paroumunt_movies$genre)
 
 
 # Cria gráfico comparando classificando filmes pela língua do filme
