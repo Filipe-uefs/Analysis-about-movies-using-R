@@ -84,14 +84,6 @@ print(paste("Desvio Padrão: ", desvio_padrao_revenue))
 coeficiente_variacao_revenue <- desvio_padrao_revenue / mean(movies_dataset_filtred$revenue, na.rm = TRUE) * 100
 print(paste("Coeficiente de Variação: ", coeficiente_variacao_revenue, "%"))
 
-# Cria gráfico comparando classificando filmes pela língua do filme
-ggplot(
-  movies_dataset_filtred, aes(x = original_language, y = after_stat(prop), group = 1)
-  ) +
-  geom_bar(color = "blue", fill = "pink") +
-  labs(title = "Gráfico de quantidade de filmes produzidos por língua", x = "Língua", y = "Porcentagem") +
-  scale_y_continuous(labels = scales::percent_format())
-
 #Gráfico de desnisdade para budget
 ggplot(movies_dataset_filtred, aes(x = budget, y =
                                   after_stat(density))) +
@@ -111,14 +103,6 @@ ggplot(movies_dataset_filtred, aes(x = vote_average, y =
   geom_density(color = "green", linewidth = 1) +
   scale_x_continuous(labels = scales::label_number(big.mark = ",",
                                                    decimal.mark = "."))
-
-media_por_genero <- movies_dataset_filtred |>
-  group_by(genre) |>
-  summarise(
-    media_vote = mean(vote_average, na.rm = TRUE),
-    n_filmes = n()
-  ) |>
-  arrange(desc(media_vote))
 
 # Gráfico Gênero vs Receita
 media_receita_genero <- movies_dataset_filtred |>
@@ -167,15 +151,21 @@ ggplot(movies_dataset_filtred, aes(x = budget, y = revenue)) +
   ) +
   theme_light()
 
-# Histograma com curva de densidade para budget
-ggplot(movies_dataset_filtred, aes(x = budget, y = after_stat(density))) +
-  geom_histogram() +
-  geom_density(color = "green", linewidth = 1)
+# Histograma para budget
+ggplot(movies_dataset_filtred, aes(x = budget)) +
+  geom_histogram(fill = "lightblue", color = "black", bins = 30) +  # Cor das barras e borda
+  scale_x_continuous(labels = label_comma()) +  # Formata os números no eixo X
+  scale_y_continuous(labels = label_comma()) +  # Formata os números no eixo Y
+  theme_minimal() +
+  labs(title = "Histograma de Budget")
 
-# Histograma com curva de densidade para revenue
-ggplot(movies_dataset_filtred, aes(x = revenue, y = after_stat(density))) +
-  geom_histogram() +
-  geom_density(color = "red", linewidth = 1)
+# Histograma para revenue
+ggplot(movies_dataset_filtred, aes(x = revenue)) +
+  geom_histogram(fill = "lightgreen", color = "black", bins = 30) +  # Cor das barras e borda
+  scale_x_continuous(labels = label_comma()) +  # Formata os números no eixo X
+  scale_y_continuous(labels = label_comma()) +  # Formata os números no eixo Y
+  theme_minimal() +
+  labs(title = "Histograma de Revenue")
 
 # Boxplot de budget
 ggplot(movies_dataset_filtred, aes(y = budget)) +
